@@ -1,0 +1,26 @@
+App(root) {
+    Nav {
+        1. Signed in links
+        2. Signed out links
+    }
+
+    Project Details {
+        /project/:id
+    }
+}
+
+Dashboard -> /dashboard or /
+Create Project -> /create
+Sign in -> /signin
+Sign up -> /signup
+
+Dashboard {
+    Project List {}
+    Notifications {}
+}
+
+Client/Browser         |      Server/Firebase
+React App and Redux    |      Firebase db      
+                       |      Firebase Auth
+                       |      Cloud Functions
+                       |
