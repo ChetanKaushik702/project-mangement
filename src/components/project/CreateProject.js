@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
+import { createProject } from '../../store/actions/projectActions';
+import { useDispatch } from 'react-redux';
 
-function CreateProject() {
-  
+function CreateProject(props) {
+  const dispatch = useDispatch();
   const [data, setData] = useState({});
 
   const handleSubmit = (e) => {
       e.preventDefault();
-      console.log(data);
+      dispatch(createProject(data));
   }
   const handleChange = (e) => {
     const { id, value } = e.target;
