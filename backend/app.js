@@ -11,8 +11,10 @@ app.use(cookieParser());
 
 // routes
 const user = require('./routes/userRoutes');
+const project = require('./routes/projectRoutes');
 
 app.use('/api/v1/user', user);
+app.use('/api/v1/project', project);
 
 app.use(errorMiddleware);
 
