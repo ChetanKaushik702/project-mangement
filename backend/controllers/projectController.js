@@ -11,14 +11,15 @@ exports.createProject = AsyncErrorHandler(async (req, res, next) => {
     );
   }
 
-  const project = await Project.create({
+  await Project.create({
     title,
     description,
     authorFirstName: req.user.fname,
     authorLastName: req.user.lname,
   });
+  const projects = await Project.find();
   res.status(201).json({
     success: true,
-    project
+    projects
   });
 });

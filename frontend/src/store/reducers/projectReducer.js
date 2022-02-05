@@ -1,22 +1,26 @@
-import { CREATE_PROJECT } from "../constants/projectConstants";
+import { CREATE_PROJECT_FAIL, CREATE_PROJECT_REQUEST, CREATE_PROJECT_SUCCESS } from "../constants/projectConstants";
 
-const initState = {
-    projects: [
-        {id: '1', title: 'title', description: 'description'},
-        {id: '2', title: 'title', description: 'description'},
-        {id: '3', title: 'title', description: 'description'}
-    ]
-}
-
-const projectReducer = (state = initState, action) => {
+const projectReducer = (state = { projects: [] }, action) => {
     switch(action.type) {
-        case CREATE_PROJECT:
-            console.log('created project', action.project);
-            break;
+        case CREATE_PROJECT_REQUEST:
+            return {
+                success: false,
+                ...state
+            }
+        case CREATE_PROJECT_SUCCESS:
+            return {
+                success: true,
+                projects: action.payload.projects
+            }
+        case CREATE_PROJECT_FAIL:
+            return {
+                success: false,
+                ...state,
+                error: action.payload
+            }
         default:
-            console.log('default case');
+            return state;
     }
-    return state;
 }
 
 export default projectReducer;
