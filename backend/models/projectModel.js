@@ -19,6 +19,9 @@ const projectSchema = new mongoose.Schema({
         trim: true,
         required: [true, 'Please enter your username']
     },
+    createdBy: {
+        type: mongoose.SchemaTypes.ObjectId,
+    },
     createdOn: {
         type: Date,
         default: Date.now()

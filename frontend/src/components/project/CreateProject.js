@@ -1,9 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { createProject } from '../../store/actions/projectActions';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router';
 
 function CreateProject(props) {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { success } = useSelector(state => state.project);
   const [data, setData] = useState({});
 
   const handleSubmit = (e) => {
@@ -14,6 +17,13 @@ function CreateProject(props) {
     const { id, value } = e.target;
     setData(data => ({...data, [id]: value}));
   }
+
+  useEffect(() => {
+    if (success) {
+      navigate('/');
+    }
+  }, [success, navigate]);
+
   return (
     <div className='container'>
         <form className='white' onSubmit={handleSubmit}>
