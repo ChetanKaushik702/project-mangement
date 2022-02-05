@@ -5,13 +5,13 @@ const ErrorHandler = require('../utils/errorHandler');
 
 // register a user
 exports.registerUser = AsyncErrorHandler(async (req, res, next) => {
-    const { fname, lname, email, password, role } = req.body;
+    const { fname, lname, email, password } = req.body;
 
-    if (!fname || !lname || !email || !password || !role) {
+    if (!fname || !lname || !email || !password) {
         return next(new ErrorHandler('Please enter all user details', 400));
     }
 
-    const user = await User.create({fname, lname, email, password, role});
+    const user = await User.create({fname, lname, email, password});
 
     sendToken(user, 201, res);
 });
