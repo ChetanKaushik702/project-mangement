@@ -1,17 +1,30 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router';
+import { useDispatch, useSelector } from 'react-redux';
+import { login } from '../../store/actions/authActions';
 
 function SignIn() {
-  
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { isAuthenticated } = useSelector(state => state.auth);
+
   const [data, setData] = useState({});
 
   const handleSubmit = (e) => {
       e.preventDefault();
-      console.log(data);
+      dispatch(login(data));
   }
   const handleChange = (e) => {
     const { id, value } = e.target;
     setData(data => ({...data, [id]: value}));
   }
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/');
+    }
+  }, [isAuthenticated, navigate]);
+
   return (
     <div className='container'>
         <form className='white' onSubmit={handleSubmit}>
