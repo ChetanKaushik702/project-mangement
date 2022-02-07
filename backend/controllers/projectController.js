@@ -11,24 +11,24 @@ exports.createProject = AsyncErrorHandler(async (req, res, next) => {
     );
   }
 
-  await Project.create({
+  const project = await Project.create({
     title,
     description,
     authorFirstName: req.user.fname,
     authorLastName: req.user.lname,
-    createdBy: req.user._id
+    createdBy: req.user._id,
   });
-  const projects = await Project.find();
+
   res.status(201).json({
     success: true,
-    projects
+    project,
   });
 });
 
-exports.getAllProjects = AsyncErrorHandler(async(req, res, next) => {
-  const projects = await Project.find({ createdBy: req.user.id });
+exports.getAllProjects = AsyncErrorHandler(async (req, res, next) => {
+  const projects = await Project.find().sort({ createdOn : -1 });
   res.status(200).json({
     success: true,
-    projects
+    projects,
   });
-})
+});

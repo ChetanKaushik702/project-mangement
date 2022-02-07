@@ -6,7 +6,7 @@ import { getAllProjects } from '../../store/actions/projectActions';
 
 const Dashboard = () => {
   const dispatch = useDispatch();
-  const { projects } = useSelector(state => state.project);
+  const { projects } = useSelector(state => state.loadProjects);
   useEffect(() => {
     dispatch(getAllProjects());
   }, [dispatch]);
@@ -14,7 +14,9 @@ const Dashboard = () => {
     <div className='dashboard container'>
         <div className='row'>
             <div className='col s12 m6'>
-                <ProjectList projects={projects}/>
+                {
+                  projects && <ProjectList projects={projects}/>
+                }
             </div>
             {/* <div className='col s12 m5 offset-m1'>
                 <Notifications />

@@ -51,3 +51,13 @@ exports.logoutUser = AsyncErrorHandler(async (req, res, next) => {
         message: 'Logged out successfully'
     });
 })
+
+// get user details
+exports.getUserDetails = AsyncErrorHandler(async (req, res, next) => {
+    const user = await User.findById(req.user.id);
+    
+    res.status(200).json({
+        success: true,
+        user
+    });
+})

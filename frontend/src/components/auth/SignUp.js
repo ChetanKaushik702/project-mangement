@@ -1,28 +1,28 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { registerUser } from '../../store/actions/authActions';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router';
+import { loadUser, registerUser } from '../../store/actions/authActions';
 
 function SignUp() {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { isAuthenticated } = useSelector(state => state.auth);
   const [data, setData] = useState({});
 
   const handleSubmit = (e) => {
       e.preventDefault();
-      console.log(data);
-
-    //   const myForm = new FormData();
-    //   myForm.set("fname", data.fname);
-    //   myForm.set("lname", data.lname);
-    //   myForm.set("email", data.email);
-    //   myForm.set("password", data.password);
-
-    //   dispatch(registerUser(myForm));
       dispatch(registerUser(data));
   }
   const handleChange = (e) => {
     const { id, value } = e.target;
     setData(data => ({...data, [id]: value}));
   }
+  useEffect (() => {
+    if (isAuthenticated) {
+      dispatch(loadUser());
+      navigate('/')
+    }
+  }, [navigate, isAuthenticated, dispatch])
   return (
     <div className='container'>
         <form className='white' onSubmit={handleSubmit}>

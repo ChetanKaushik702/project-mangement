@@ -2,11 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { createProject } from '../../store/actions/projectActions';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
+import { CREATE_PROJECT_RESET } from '../../store/constants/projectConstants';
 
 function CreateProject(props) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { success } = useSelector(state => state.project);
+  const { isCreated } = useSelector(state => state.createProject);
   const [data, setData] = useState({});
 
   const handleSubmit = (e) => {
@@ -19,10 +20,11 @@ function CreateProject(props) {
   }
 
   useEffect(() => {
-    if (success) {
+    if (isCreated) {
       navigate('/');
+      dispatch({ type: CREATE_PROJECT_RESET });
     }
-  }, [success, navigate]);
+  }, [isCreated, navigate, dispatch]);
 
   return (
     <div className='container'>
